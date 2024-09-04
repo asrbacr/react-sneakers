@@ -37,12 +37,24 @@ header {
   background: rgb(255, 255, 255);
   width: 210px;
   padding: 30px;
+  gap: 14px;
 
-  svg {
-    box-sizing: content-box;
+  .button__like {
+    box-sizing: border-box;
     border: 1px solid rgb(248, 248, 248);
     border-radius: 7px;
     background: rgb(255, 255, 255);
     padding: 10px;
+  }
+
+  
+  .button__plus {
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid #f2f2f2;
+    border-radius: 8px;
+  }
+  span {
+    color: #bdbdbd;
   }
 }
