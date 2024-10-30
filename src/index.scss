@@ -31,30 +31,17 @@ header {
 }
 
 .card {
-  border: 1px solid rgb(243, 243, 243);
-  border-radius: 40px;
-
-  background: rgb(255, 255, 255);
-  width: 210px;
+  border: 1px solid #f8f8f8;
   padding: 30px;
-  gap: 14px;
+  width: 220px;
+  border-radius: 40px;
+}
 
-  .button__like {
-    box-sizing: border-box;
-    border: 1px solid rgb(248, 248, 248);
-    border-radius: 7px;
-    background: rgb(255, 255, 255);
-    padding: 10px;
-  }
-
-  
-  .button__plus {
-    padding: 10px;
-    background: #ffffff;
-    border: 1px solid #f2f2f2;
-    border-radius: 8px;
-  }
-  span {
-    color: #bdbdbd;
-  }
+.button {
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #f2f2f2;
+  border-radius: 8px;
+  height: 32px;
+  width: 32px;
 }
