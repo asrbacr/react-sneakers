@@ -8,7 +8,7 @@ function App() {
           <img className="mr-15" width={40} height={40} src="./img/logo.png" />
           <div>
             <h3 className="text-uppercase">React Sneakers</h3>
-            <p>Магазин лучших кроссовок</p>
+            <p className="opacity-5">Магазин лучших кроссовок</p>
           </div>
         </div>
         <div className="header__right align-center d-flex">
@@ -90,18 +90,97 @@ function App() {
       </header>
       <div className="content p-40">
         <h1 className="mb-40">Все кроссовки</h1>
-        
-        <div className="card">
-          <img width={133} height={112} src="/img/sneakers/1.jpg" alt="Sneakers_1" />
-          <p>Мужские Кроссовки Nike Blazer Mid Suede</p>
-          <div className="d-flex justify-between">
-            <div className="d-flex flex-column">
-              <p>Цена:</p>
-              <b>12 999,00 руб</b>
+
+        <div className="d-flex">
+          <div className="card d-flex flex-column">
+            <img
+              width={133}
+              height={112}
+              src="/img/sneakers/1.jpg"
+              alt="Sneakers"
+            />
+            <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+            <div className="d-flex justify-between align-center">
+              <div className="d-flex flex-column">
+                <p>Цена:</p>
+                <b>12 999 руб</b>
+              </div>
+              <button className="button">
+                <img height={32} width={32} src="/img/plus.svg" alt="plus" />
+              </button>
             </div>
-            <button className="button">
-              <img height={32} width={32} src="/img/plus.svg" alt="plus" />
-            </button>
+          </div>
+          <div className="card d-flex flex-column">
+            <img
+              width={133}
+              height={112}
+              src="/img/sneakers/2.jpg"
+              alt="Sneakers"
+            />
+            <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+            <div className="d-flex justify-between align-center">
+              <div className="d-flex flex-column">
+                <p>Цена:</p>
+                <b>12 999 руб</b>
+              </div>
+              <button className="button">
+                <img height={32} width={32} src="/img/plus.svg" alt="plus" />
+              </button>
+            </div>
+          </div>
+          <div className="card d-flex flex-column">
+            <img
+              width={133}
+              height={112}
+              src="/img/sneakers/3.jpg"
+              alt="Sneakers"
+            />
+            <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+            <div className="d-flex justify-between align-center">
+              <div className="d-flex flex-column">
+                <p>Цена:</p>
+                <b>12 999 руб</b>
+              </div>
+              <button className="button">
+                <img height={32} width={32} src="/img/plus.svg" alt="plus" />
+              </button>
+            </div>
+          </div>
+          <div className="card d-flex flex-column">
+            <img
+              width={133}
+              height={112}
+              src="/img/sneakers/4.jpg"
+              alt="Sneakers"
+            />
+            <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+            <div className="d-flex justify-between align-center">
+              <div className="d-flex flex-column">
+                <p>Цена:</p>
+                <b>12 999 руб</b>
+              </div>
+              <button className="button">
+                <img height={32} width={32} src="/img/plus.svg" alt="plus" />
+              </button>
+            </div>
+          </div>
+          <div className="card d-flex flex-column">
+            <img
+              width={133}
+              height={112}
+              src="/img/sneakers/1.jpg"
+              alt="Sneakers"
+            />
+            <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+            <div className="d-flex justify-between align-center">
+              <div className="d-flex flex-column">
+                <p>Цена:</p>
+                <b>12 999 руб</b>
+              </div>
+              <button className="button">
+                <img height={32} width={32} src="/img/plus.svg" alt="plus" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
