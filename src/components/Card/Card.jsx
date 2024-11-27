@@ -1,10 +1,12 @@
+import cn from "classname";
+import styles from "./Card.module.scss";
+
+console.log(styles);
+
 export const Card = (props) => {
-
-  // console.log(props);
-
   return (
-    <div className="card d-flex flex-column mb-20">
-      <div className="favorite">
+    <div className={cn(styles.card, cn(`d-flex`, `flex-column`, `mb-20`))}>
+      <div className={styles.favorite}>
         <img
           width={32}
           height={32}

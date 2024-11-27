@@ -95,7 +95,12 @@ function App() {
 
         <div className="d-flex flex-wrap">
           {arr.map((el) => (
-            <Card title={el.title} price={el.price} imageUrl={el.imageUrl} onClick={() => console.log(el)} />
+            <Card
+              title={el.title}
+              price={el.price}
+              imageUrl={el.imageUrl}
+              onClick={() => console.log(el)}
+            />
           ))}
         </div>
       </div>
