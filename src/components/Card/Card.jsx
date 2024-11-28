@@ -1,12 +1,17 @@
 import cn from "classname";
 import styles from "./Card.module.scss";
-
-console.log(styles);
+import { useState } from "react";
 
 export const Card = (props) => {
+  const [isAdded, setIsAdded] = useState(false);
+
+  const handleClicked = () => {
+    setIsAdded(!isAdded);
+  };
+
   return (
-    <div className={cn(styles.card, cn(`d-flex`, `flex-column`, `mb-20`))}>
-      <div className={styles.favorite}>
+    <div className={cn(styles.card, `d-flex`, `flex-column`, `mb-20`)}>
+      <div className={styles.favorite} onClick={props.onClickFavorite}>
         <img
           width={32}
           height={32}
@@ -21,9 +26,12 @@ export const Card = (props) => {
           <p>Цена:</p>
           <b>{props.price} руб</b>
         </div>
-        <button className="button" onClick={props.onClick}>
-          <img height={32} width={32} src="/img/btn-plus.svg" alt="plus" />
-        </button>
+        <img
+          className={styles.plus}
+          src={isAdded ? "/img/btn-checked.svg" : "/img/btn-plus.svg"}
+          alt="plus"
+          onClick={handleClicked}
+        />
       </div>
     </div>
   );

@@ -1,4 +1,7 @@
-export const Header = () => {
+import cn from "classname";
+import style from "./Header.module.scss";
+
+export const Header = (props) => {
   return (
     <header className="d-flex justify-between p-40">
       <div className="d-flex align-center">
@@ -10,7 +13,10 @@ export const Header = () => {
       </div>
       <div className="header__right align-center d-flex">
         <ul className="d-flex align-center">
-          <li className="d-flex align-center mr-30">
+          <li
+            onClick={props.onClickCart}
+            className="d-flex align-center mr-30 cu-p"
+          >
             <svg
               width="20"
               height="20"
