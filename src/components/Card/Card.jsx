@@ -2,16 +2,28 @@ import cn from "classname";
 import styles from "./Card.module.scss";
 import { useState } from "react";
 
-export const Card = (props) => {
+export const Card = ({
+  id,
+  imageUrl,
+  title,
+  price,
+  onPlus,
+  onClickFavorite,
+}) => {
   const [isAdded, setIsAdded] = useState(false);
 
   const handleClicked = () => {
     setIsAdded(!isAdded);
   };
 
+  const onClickPlus = () => {
+    handleClicked();
+    onPlus({ imageUrl, title, price, id });
+  };
+
   return (
-    <div className={cn(styles.card, `d-flex`, `flex-column`, `mb-20`)}>
-      <div className={styles.favorite} onClick={props.onClickFavorite}>
+    <div className={cn(styles.card, "d-flex", "flex-column", "mb-30")}>
+      <div className={styles.favorite} onClick={onClickFavorite}>
         <img
           width={32}
           height={32}
@@ -19,18 +31,18 @@ export const Card = (props) => {
           alt="unliked"
         />
       </div>
-      <img width={133} height={112} src={props.imageUrl} alt="Sneakers" />
-      <h5>{props.title}</h5>
-      <div className="d-flex justify-between align-center">
+      <img width={133} height={112} src={imageUrl} alt="Sneakers" />
+      <h5>{title}</h5>
+      <div className="d-flex justify-between align-center" id={id}>
         <div className="d-flex flex-column">
           <p>Цена:</p>
-          <b>{props.price} руб</b>
+          <b>{price} руб</b>
         </div>
         <img
           className={styles.plus}
           src={isAdded ? "/img/btn-checked.svg" : "/img/btn-plus.svg"}
           alt="plus"
-          onClick={handleClicked}
+          onClick={onClickPlus}
         />
       </div>
     </div>
