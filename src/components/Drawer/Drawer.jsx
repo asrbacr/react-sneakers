@@ -2,6 +2,15 @@ import cn from "classname";
 import style from "./Drawer.module.scss";
 
 export const Drawer = ({onClose, items = []}) => {
+    // удалить элемент из списка cartItems
+    // const 
+    if (isSearchCard) {
+      const filteredCartItems = cartItems.filter((ind) => ind.id !== el.id);
+      setCartItems(filteredCartItems);
+      return;
+    }
+
+
   return (
     <div className={style.overlay}>
       <div className={style.drawer}>
@@ -15,7 +24,7 @@ export const Drawer = ({onClose, items = []}) => {
           />
         </h2>
 
-        <div className={style.items}>
+        <div className={style.items} id={items.id}>
           {items.map((elem) => (
             <div
               className={cn(style.cartItem, "d-flex", "align-center", "mb-20")}
@@ -33,6 +42,7 @@ export const Drawer = ({onClose, items = []}) => {
                 className={style.removeBtn}
                 src="/img/btn-remove.svg"
                 alt="Remove"
+                onClick={() => console.log("Удалить товар")}
               />
             </div>
           ))}

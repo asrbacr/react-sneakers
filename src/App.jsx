@@ -21,10 +21,10 @@ function App() {
   }, []);
 
   const onAddToCart = (el) => {
-    console.log(items.id);
-    console.log(el);
-    console.log(items.includes(el));
-    if (el !== cartItems) {
+    const itemIndexAll = items.find((index) => index.id === el.id);
+    const isSearchCard = cartItems.some((ind) => ind.id === el.id);
+
+    if (el.id === itemIndexAll.id && !isSearchCard) {
       setCartItems((prev) => [...prev, el]);
     }
   };

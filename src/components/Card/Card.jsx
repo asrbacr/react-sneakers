@@ -22,7 +22,7 @@ export const Card = ({
   };
 
   return (
-    <div className={cn(styles.card, "d-flex", "flex-column", "mb-30")}>
+    <div className={cn(styles.card, "d-flex", "flex-column", "mb-30")} id={id}>
       <div className={styles.favorite} onClick={onClickFavorite}>
         <img
           width={32}
@@ -33,7 +33,7 @@ export const Card = ({
       </div>
       <img width={133} height={112} src={imageUrl} alt="Sneakers" />
       <h5>{title}</h5>
-      <div className="d-flex justify-between align-center" id={id}>
+      <div className="d-flex justify-between align-center">
         <div className="d-flex flex-column">
           <p>Цена:</p>
           <b>{price} руб</b>
