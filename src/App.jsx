@@ -46,14 +46,16 @@ function App() {
 
         <div className="d-flex flex-wrap">
           {items.map((el) => (
-            <Card
-              id={el.id}
-              title={el.title}
-              price={el.price}
-              imageUrl={el.imageUrl}
-              onClickFavorite={() => console.log("Добавили в закладки")}
-              onPlus={(obj) => onAddToCart(obj)}
-            />
+            <>
+              <Card
+                key={el.id}
+                title={el.title}
+                price={el.price}
+                imageUrl={el.imageUrl}
+                onClickFavorite={() => console.log("Добавили в закладки")}
+                onPlus={(obj) => onAddToCart(obj)}
+              />
+            </>
           ))}
         </div>
       </div>

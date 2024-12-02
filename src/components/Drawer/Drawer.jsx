@@ -1,15 +1,13 @@
 import cn from "classname";
 import style from "./Drawer.module.scss";
+import { useEffect, useState } from "react";
 
-export const Drawer = ({onClose, items = []}) => {
-    // удалить элемент из списка cartItems
-    // const 
-    if (isSearchCard) {
-      const filteredCartItems = cartItems.filter((ind) => ind.id !== el.id);
-      setCartItems(filteredCartItems);
-      return;
-    }
+export const Drawer = ({ onClose, items = [] }) => {
+  const [itemsCard, setItemsCard] = useState(items);
 
+  const deleteItem = (el) => {
+    setItemsCard(itemsCard.filter((item) => item.id !== el.id));
+  };
 
   return (
     <div className={style.overlay}>
@@ -25,7 +23,7 @@ export const Drawer = ({onClose, items = []}) => {
         </h2>
 
         <div className={style.items} id={items.id}>
-          {items.map((elem) => (
+          {itemsCard.map((elem) => (
             <div
               className={cn(style.cartItem, "d-flex", "align-center", "mb-20")}
             >
@@ -42,11 +40,10 @@ export const Drawer = ({onClose, items = []}) => {
                 className={style.removeBtn}
                 src="/img/btn-remove.svg"
                 alt="Remove"
-                onClick={() => console.log("Удалить товар")}
+                onClick={() => deleteItem(elem)}
               />
             </div>
           ))}
-          
         </div>
         <div className={style.cartTotalBlock}>
           <ul>

@@ -5,7 +5,7 @@ export const Header = (props) => {
   return (
     <header className="d-flex justify-between p-40">
       <div className="d-flex align-center">
-        <img className="mr-15" width={40} height={40} src="./img/logo.png" />
+        <img className="mr-15" width={40} height={40} src="./img/logo.png" alt="logo" />
         <div>
           <h3 className="text-uppercase">React Sneakers</h3>
           <p className="opacity-5">Магазин лучших кроссовок</p>
