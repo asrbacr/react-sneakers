@@ -22,7 +22,7 @@ export const Card = ({
   };
 
   return (
-    <div className={cn(styles.card, "d-flex", "flex-column", "mb-30")} id={id}>
+    <div className={cn(styles.card, "d-flex", "flex-column", "mb-30")} key={id}>
       <div className={styles.favorite} onClick={onClickFavorite}>
         <img
           width={32}

@@ -2,7 +2,7 @@ import cn from "classname";
 import style from "./Drawer.module.scss";
 import { useEffect, useState } from "react";
 
-export const Drawer = ({ onClose, items = [] }) => {
+export const Drawer = ({ onClose, onRemove, items = [] }) => {
   const [itemsCard, setItemsCard] = useState(items);
 
   const deleteItem = (el) => {
@@ -22,25 +22,25 @@ export const Drawer = ({ onClose, items = [] }) => {
           />
         </h2>
 
-        <div className={style.items} id={items.id}>
-          {itemsCard.map((elem) => (
+        <div className={style.items} key={items.id}>
+          {itemsCard.map((item) => (
             <div
               className={cn(style.cartItem, "d-flex", "align-center", "mb-20")}
             >
               <div
-                style={{ backgroundImage: `url(${elem.imageUrl})` }}
+                style={{ backgroundImage: `url(${item.imageUrl})` }}
                 className={style.cartItemImg}
               ></div>
 
               <div className="mr-20 flex">
-                <p className="mb-5">{elem.title}</p>
-                <b>{elem.price} руб.</b>
+                <p className="mb-5">{item.title}</p>
+                <b>{item.price} руб.</b>
               </div>
               <img
                 className={style.removeBtn}
                 src="/img/btn-remove.svg"
                 alt="Remove"
-                onClick={() => deleteItem(elem)}
+                onClick={() => onRemove(item.id)}
               />
             </div>
           ))}
