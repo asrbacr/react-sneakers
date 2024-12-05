@@ -89,6 +89,30 @@
   }
 }
 
+.CartEmpty {
+  text-align: center;
+
+  p {
+    line-height: 24px;
+  }
+
+  .greenButton {
+    &:hover {
+      img {
+        transform: rotate(180deg) translateX(3px);
+      }
+    }
+
+    img {
+      position: relative;
+      top: 1px;
+      transform: rotate(180deg);
+      margin-right: 15px;
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+}
+
 .cartItem {
   border: 1px solid #f3f3f3;
   border-radius: 20px;

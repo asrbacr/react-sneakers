@@ -4,36 +4,42 @@ import { Header } from "./components/Header/Header";
 import { Drawer } from "./components/Drawer/Drawer";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import URL from "./config.json";
 
-const url = "https://6748ad4a5801f5153591d1e2.mockapi.io/";
+const url = URL.API_URL;
 
 function App() {
   const [cartOpened, setCartOpened] = useState(false);
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
   // через библиотеку axios;
   useEffect(() => {
-    axios.get(`${url}sneakers`).then((res) => {
-      setItems(res.data);
+    axios.get(`${url}/items`).then((res) => {
+      console.log(res.data.items);
     });
-    axios.get(`${url}cart`).then((res) => {
-      setCartItems(res.data);
-    });
+
+    // axios.get(`${url}/items`).then((res) => {
+    //   setItems(res.data);
+    //   console.log(res.data);
+    // });
+    // axios.get(`${url}/cart`).then((res) => {
+    //   setCartItems(res.data);
+    // });
   }, []);
 
   const onRemoveItem = (id) => {
-    console.log(id);
-    // axios.delete(`${url}${el.id}`);
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    setCartItems((prev) => prev.filter((el) => el.id !== id));
+    axios.delete(`${url}/cart/${id}`);
   };
 
   /* // через асинхронную функцию
   useEffect(() => {
     async function fetchData() {
       const res = await fetch(
-        `${url}sneakers`
+        `${url}/items`
       );
       const data = await res.json();
       setItems(data);
@@ -42,12 +48,26 @@ function App() {
   }, []); */
 
   const onAddToCart = (el) => {
-    const itemIndexAll = items.find((index) => index.id === el.id);
-    const isSearchCard = cartItems.some((index) => index.id === el.id);
+    const itemIndexAll = items.find((item) => item.imageUrl === el.imageUrl);
+    const isSearchCard = cartItems.some(
+      (item) => item.imageUrl === el.imageUrl
+    );
 
-    if (el.id === itemIndexAll.id && !isSearchCard) {
-      axios.post(`${url}cart`, el);
+    if (el.imageUrl === itemIndexAll.imageUrl && !isSearchCard) {
+      axios.post(`${url}/cart`, el);
       setCartItems((prev) => [...prev, el]);
+    }
+  };
+
+  const onAddToFavorites = (el) => {
+    const itemIndexAll = items.find((item) => item.imageUrl === el.imageUrl);
+    const isSearchCard = cartItems.some(
+      (item) => item.imageUrl === el.imageUrl
+    );
+
+    if (el.imageUrl === itemIndexAll.imageUrl && !isSearchCard) {
+      axios.post(`${url}/favorites`, el);
+      setFavorites((prev) => [...prev, el]);
     }
   };
 
@@ -98,11 +118,13 @@ function App() {
             .map((item) => (
               <>
                 <Card
-                  key={item.id}
+                  // key={item.ind}
                   title={item.title}
                   price={item.price}
                   imageUrl={item.imageUrl}
-                  onClickFavorite={() => console.log("Добавили в закладки")}
+                  onFavorite={() => {
+                    onAddToFavorites(item);
+                  }}
                   onPlus={() => {
                     onAddToCart(item);
                   }}
