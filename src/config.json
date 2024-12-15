@@ -1,3 +1,8 @@
 {
-    "API_URL": "https://6748ad4a5801f5153591d1e2.mockapi.io/sneakers"
+    "API_URL": "https://6748ad4a5801f5153591d1e2.mockapi.io/",
+    "API_URL_2": "https://675f1aa81f7ad24269979708.mockapi.io/",
+    "comment_url_2": {
+        "login": "yar96106@kisoq.com",
+        "pass": "1235ASr!"
+    }
 }
