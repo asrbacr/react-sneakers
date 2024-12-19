@@ -2,9 +2,9 @@ import cn from "classname";
 import styles from "./Card.module.scss";
 import { useState } from "react";
 
-export const Card = ({ imageUrl, title, price, onPlus, onFavorite }) => {
+export const Card = ({ imageUrl, title, price, onPlus, onFavorite, favorited }) => {
   const [isAdded, setIsAdded] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(favorited);
 
   const handleClicked = () => {
     setIsAdded(!isAdded);

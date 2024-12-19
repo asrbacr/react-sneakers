@@ -6,6 +6,8 @@ import { Drawer } from "./components/Drawer/Drawer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import URL from "./config.json";
+import { Home } from "./components/pages/Home";
+import { Favorites } from "./components/pages/Favorites";
 
 const url = URL.API_URL;
 const url2 = URL.API_URL_2;
@@ -110,6 +112,10 @@ function App() {
     axios.get(`${url}/cart`).then((res) => {
       setCartItems(res.data);
     });
+
+    axios.get(`${url2}/favorites`).then((res) => {
+      setFavorites(res.data);
+    });
   }, []);
 
   const onRemoveItem = (id) => {
@@ -168,57 +174,32 @@ function App() {
       )}
       <Header onClickCart={() => setCartOpened(true)} />
       <Routes>
-        <Route path="/test">Это тестовая информация</Route>
-      </Routes>
-
-      <div className="content p-40">
-        <div className="d-flex justify-between align-center mb-40">
-          <h1>
-            {searchValue
-              ? `Поиска по запросу: ${searchValue}`
-              : "Все кроссовки"}
-          </h1>
-          <div className="search-block d-flex">
-            <img src="/img/search.svg" alt="search" />
-            {searchValue && (
-              <img
-                className="clear cu-p"
-                src="/img/btn-remove.svg"
-                alt="Clear"
-                onClick={() => setSearchValue("")}
-              />
-            )}
-            <input
-              onChange={onChangeSearchInput}
-              value={searchValue}
-              placeholder="Поиск..."
+        {/* Свойство exact обозначает строгое значение ссылки */}
+        <Route
+          path="/"
+          element={
+            <Home
+              items={items}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              onChangeSearchInput={onChangeSearchInput}
+              onAddToCart={onAddToCart}
+              onAddToFavorites={onAddToFavorites}
             />
-          </div>
-        </div>
-
-        <div className="d-flex flex-wrap">
-          {items
-            .filter((item) =>
-              item.title.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <>
-                <Card
-                  // key={item.ind}
-                  title={item.title}
-                  price={item.price}
-                  imageUrl={item.imageUrl}
-                  onFavorite={() => {
-                    onAddToFavorites(item);
-                  }}
-                  onPlus={() => {
-                    onAddToCart(item);
-                  }}
-                />
-              </>
-            ))}
-        </div>
-      </div>
+          }
+          exact
+        ></Route>
+        <Route
+          path="/favorites"
+          element={
+            <Favorites
+              items={favorites}
+              onAddToFavorites={onAddToFavorites}
+              onAddToCart={onAddToCart}
+            />
+          }
+        ></Route>
+      </Routes>
     </div>
   );
 }
