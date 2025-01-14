@@ -2,7 +2,8 @@ import cn from "classname";
 import styles from "./Card.module.scss";
 import { useState } from "react";
 
-export const Card = ({ imageUrl, title, price, onPlus, onFavorite, favorited }) => {
+export const Card = ({id, imageUrl, title, price, onPlus, onFavorite, favorited = false }) => {
+  
   const [isAdded, setIsAdded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favorited);
 
@@ -12,7 +13,7 @@ export const Card = ({ imageUrl, title, price, onPlus, onFavorite, favorited }) 
 
   const onClickFavorite = () => {
     setIsFavorite(!isFavorite);
-    onFavorite({ imageUrl, title, price });
+    onFavorite({ id, imageUrl, title, price });
     
   }
 

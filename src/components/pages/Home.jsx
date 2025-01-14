@@ -37,13 +37,11 @@ export const Home = ({
           .filter((item) =>
             item.title.toLowerCase().includes(searchValue.toLowerCase())
           )
-          .map((item) => (
+          .map((item, index) => (
             <>
               <Card
-                // key={item.ind}
-                title={item.title}
-                price={item.price}
-                imageUrl={item.imageUrl}
+                key={index}
+                {...item}
                 onFavorite={() => {
                   onAddToFavorites(item);
                 }}
@@ -57,4 +55,3 @@ export const Home = ({
     </div>
   );
 };
-

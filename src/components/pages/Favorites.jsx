@@ -8,20 +8,18 @@ export const Favorites = ({ items, onAddToFavorites, onAddToCart }) => {
       </div>
 
       <div className="d-flex flex-wrap">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <>
             <Card
-              // key={item.ind}
-              title={item.title}
-              price={item.price}
-              imageUrl={item.imageUrl}
+              key={index}
+              favorited={true}
               onFavorite={() => {
                 onAddToFavorites(item);
               }}
               onPlus={() => {
                 onAddToCart(item);
               }}
-              favorited={true}
+              {...item}
             />
           </>
         ))}

@@ -101,8 +101,8 @@ function App() {
 
   // через библиотеку axios;
   useEffect(() => {
-    // axios.get(`${url}/sneakers`).then((res) => {
-    //   console.log(res.data);
+    // axios.get(`${url}/`).then((res) => {
+    //   setItems(res.data);
     // });
 
     axios.get(`${url}/sneakers`).then((res) => {
@@ -147,16 +147,33 @@ function App() {
     }
   };
 
-  const onAddToFavorites = (el) => {
-    const itemIndexAll = items.find((item) => item.imageUrl === el.imageUrl);
-    const isSearchCard = cartItems.some(
-      (item) => item.imageUrl === el.imageUrl
-    );
-
-    if (el.imageUrl === itemIndexAll.imageUrl && !isSearchCard) {
-      axios.post(`${url2}/favorites`, el);
-      setFavorites((prev) => [...prev, el]);
+  const onAddToFavorites = async (el) => {
+    try {
+      if (favorites.find((obj) => obj.id === el.id)) {
+        axios.delete(`${url2}/favorites/${el.id}`);
+      } else {
+        const { data } = await axios.post(`${url2}/favorites`, el);
+        setFavorites((prev) => [...prev, data]);
+      }
+    } catch (error) {
+      alert("Не удалось добавить в избранное");
     }
+
+    // const itemIndexAll = items.find((item) => item.imageUrl === el.imageUrl);
+    // const isSearchCard = cartItems.some(
+    //   (item) => item.imageUrl === el.imageUrl
+    // );
+
+    // if (el.imageUrl === itemIndexAll.imageUrl && !isSearchCard) {
+    //   console.log(el);
+    //   if (favorites.find((obj) => obj.id === el.id)) {
+    //     axios.delete(`${url2}/favorites/${el.id}`);
+    //     setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
+    //   } else {
+    //     axios.post(`${url2}/favorites`, el);
+    //     setFavorites((prev) => [...prev, el]);
+    //   }
+    // }
   };
 
   const onChangeSearchInput = (event) => {
@@ -176,7 +193,7 @@ function App() {
       <Routes>
         {/* Свойство exact обозначает строгое значение ссылки */}
         <Route
-          path="/"
+          path="/sneakers"
           element={
             <Home
               items={items}

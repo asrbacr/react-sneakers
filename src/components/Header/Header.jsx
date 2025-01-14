@@ -5,7 +5,7 @@ import { Link } from "react-router";
 export const Header = (props) => {
   return (
     <header className="d-flex justify-between p-40">
-      <Link to="/">
+      <Link to="/sneakers">
         <div className="d-flex align-center cu-p">
           <img
             className="mr-15"
