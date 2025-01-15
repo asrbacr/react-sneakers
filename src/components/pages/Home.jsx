@@ -2,6 +2,7 @@ import { Card } from "../Card/Card";
 
 export const Home = ({
   items,
+  cartItems,
   searchValue,
   setSearchValue,
   onChangeSearchInput,
@@ -38,18 +39,18 @@ export const Home = ({
             item.title.toLowerCase().includes(searchValue.toLowerCase())
           )
           .map((item, index) => (
-            <>
-              <Card
-                key={index}
-                {...item}
-                onFavorite={() => {
-                  onAddToFavorites(item);
-                }}
-                onPlus={() => {
-                  onAddToCart(item);
-                }}
-              />
-            </>
+            <Card
+              key={index}
+              onFavorite={(obj) => {
+                onAddToFavorites(obj);
+              }}
+              onPlus={(obj) => {
+                onAddToCart(obj);
+              }}
+              added={cartItems.some(obj => Number(obj.id) === Number(item.id))}
+              loading={true}
+              {...item}
+            />
           ))}
       </div>
     </div>

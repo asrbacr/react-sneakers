@@ -21,7 +21,7 @@ export const Drawer = ({ onClose, onRemove, items = [] }) => {
           <>
             <div className={style.items}>
               {items.map((item) => (
-                <div
+                <div key={item.id}
                   className={cn(
                     style.cartItem,
                     "d-flex",

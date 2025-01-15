@@ -105,17 +105,17 @@ function App() {
     //   setItems(res.data);
     // });
 
-    axios.get(`${url}/sneakers`).then((res) => {
-      setItems(res.data);
-    });
+    async function fetchData() {
+      const cartResponse = await axios.get(`${url}/cart`);
+      const favoritesResponse = await axios.get(`${url2}/favorites`);
+      const itemsResponse = await axios.get(`${url}/sneakers`);
 
-    axios.get(`${url}/cart`).then((res) => {
-      setCartItems(res.data);
-    });
+      setCartItems(cartResponse.data);
+      setFavorites(favoritesResponse.data);
+      setItems(itemsResponse.data);
+    }
 
-    axios.get(`${url2}/favorites`).then((res) => {
-      setFavorites(res.data);
-    });
+    fetchData();
   }, []);
 
   const onRemoveItem = (id) => {
@@ -136,15 +136,29 @@ function App() {
   }, []); */
 
   const onAddToCart = (el) => {
-    const itemIndexAll = items.find((item) => item.imageUrl === el.imageUrl);
-    const isSearchCard = cartItems.some(
-      (item) => item.imageUrl === el.imageUrl
-    );
-
-    if (el.imageUrl === itemIndexAll.imageUrl && !isSearchCard) {
-      axios.post(`${url}/cart`, el);
-      setCartItems((prev) => [...prev, el]);
+    console.log(el);
+    try {
+      if (cartItems.find((obj) => Number(obj.id) === Number(el.id))) {
+        axios.delete(`${url}/cart/${el.id}`);
+        setCartItems((prev) =>
+          prev.filter((item) => Number(item.id) !== Number(el.id))
+        );
+      } else {
+        axios.post(`${url}/cart`, el);
+        setCartItems((prev) => [...prev, el]);
+      }
+    } catch (error) {
+      alert("Не удалось добавить в корзину");
     }
+    // const itemIndexAll = items.find((item) => item.imageUrl === el.imageUrl);
+    // const isSearchCard = cartItems.some(
+    //   (item) => item.imageUrl === el.imageUrl
+    // );
+
+    // if (el.imageUrl === itemIndexAll.imageUrl && !isSearchCard) {
+    //   axios.post(`${url}/cart`, el);
+    //   setCartItems((prev) => [...prev, el]);
+    // }
   };
 
   const onAddToFavorites = async (el) => {
@@ -197,6 +211,7 @@ function App() {
           element={
             <Home
               items={items}
+              cartItems={cartItems}
               searchValue={searchValue}
               setSearchValue={setSearchValue}
               onChangeSearchInput={onChangeSearchInput}
