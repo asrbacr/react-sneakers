@@ -98,6 +98,7 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   // через библиотеку axios;
   useEffect(() => {
@@ -106,9 +107,13 @@ function App() {
     // });
 
     async function fetchData() {
+      // если ф-ция выполняется больше 1-ого раза, то лучше выставлять состояние загрузки.
+      // setIsLoading(true);
       const cartResponse = await axios.get(`${url}/cart`);
       const favoritesResponse = await axios.get(`${url2}/favorites`);
       const itemsResponse = await axios.get(`${url}/sneakers`);
+
+      setIsLoading(false);
 
       setCartItems(cartResponse.data);
       setFavorites(favoritesResponse.data);
@@ -217,6 +222,7 @@ function App() {
               onChangeSearchInput={onChangeSearchInput}
               onAddToCart={onAddToCart}
               onAddToFavorites={onAddToFavorites}
+              isLoading={isLoading}
             />
           }
           exact
