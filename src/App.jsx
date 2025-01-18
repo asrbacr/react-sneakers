@@ -8,6 +8,7 @@ import axios from "axios";
 import URL from "./config.json";
 import { Home } from "./components/pages/Home";
 import { Favorites } from "./components/pages/Favorites";
+import AppContext from "./context";
 
 const url = URL.API_URL;
 const url2 = URL.API_URL_2;
@@ -92,6 +93,8 @@ const data = [
   },
 ];
 
+console.log(AppContext);
+
 function App() {
   const [cartOpened, setCartOpened] = useState(false);
   const [items, setItems] = useState([]);
@@ -168,8 +171,11 @@ function App() {
 
   const onAddToFavorites = async (el) => {
     try {
-      if (favorites.find((obj) => obj.id === el.id)) {
+      if (favorites.find((obj) => Number(obj.id) === Number(el.id))) {
         axios.delete(`${url2}/favorites/${el.id}`);
+        setFavorites((prev) =>
+          prev.filter((obj) => Number(obj.id) !== Number(el.id))
+        );
       } else {
         const { data } = await axios.post(`${url2}/favorites`, el);
         setFavorites((prev) => [...prev, data]);
@@ -199,46 +205,56 @@ function App() {
     setSearchValue(event.target.value);
   };
 
+  const isItemAdded = (id) => {
+    return cartItems.some((obj) => Number(obj.id) === Number(id));
+  };
+
   return (
-    <div className="wrapper clear">
-      {cartOpened && (
-        <Drawer
-          items={cartItems}
-          onClose={() => setCartOpened(false)}
-          onRemove={onRemoveItem}
-        />
-      )}
-      <Header onClickCart={() => setCartOpened(true)} />
-      <Routes>
-        {/* Свойство exact обозначает строгое значение ссылки */}
-        <Route
-          path="/sneakers"
-          element={
-            <Home
-              items={items}
-              cartItems={cartItems}
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-              onChangeSearchInput={onChangeSearchInput}
-              onAddToCart={onAddToCart}
-              onAddToFavorites={onAddToFavorites}
-              isLoading={isLoading}
-            />
-          }
-          exact
-        ></Route>
-        <Route
-          path="/favorites"
-          element={
-            <Favorites
-              items={favorites}
-              onAddToFavorites={onAddToFavorites}
-              onAddToCart={onAddToCart}
-            />
-          }
-        ></Route>
-      </Routes>
-    </div>
+    <AppContext.Provider
+      value={{
+        items,
+        cartItems,
+        favorites,
+        isItemAdded,
+        onAddToFavorites,
+        setCartOpened,
+        setCartItems,
+      }}
+    >
+      <div className="wrapper clear">
+        {cartOpened && (
+          <Drawer
+            items={cartItems}
+            onClose={() => setCartOpened(false)}
+            onRemove={onRemoveItem}
+          />
+        )}
+        <Header onClickCart={() => setCartOpened(true)} />
+        <Routes>
+          {/* Свойство exact обозначает строгое значение ссылки */}
+          <Route
+            path="/"
+            element={
+              <Home
+                items={items}
+                cartItems={cartItems}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+                onChangeSearchInput={onChangeSearchInput}
+                onAddToCart={onAddToCart}
+                onAddToFavorites={onAddToFavorites}
+                isLoading={isLoading}
+              />
+            }
+            exact
+          ></Route>
+          <Route
+            path="/favorites"
+            element={<Favorites onAddToCart={onAddToCart} />}
+          ></Route>
+        </Routes>
+      </div>
+    </AppContext.Provider>
   );
 }
 

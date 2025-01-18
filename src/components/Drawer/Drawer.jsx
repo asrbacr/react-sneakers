@@ -1,9 +1,17 @@
 import cn from "classname";
 import style from "./Drawer.module.scss";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import Info from "../Info/Info";
+import AppContext from "../../context";
 
 export const Drawer = ({ onClose, onRemove, items = [] }) => {
-  const [itemsCard, setItemsCard] = useState(items);
+  const { setCartItems } = useContext(AppContext);
+  const [isOrderCompete, setIsOrderCompete] = useState(false);
+
+  const onClickOrder = () => {
+    setIsOrderCompete(true);
+    setCartItems([]);
+  };
 
   return (
     <div className={style.overlay}>
@@ -21,7 +29,8 @@ export const Drawer = ({ onClose, onRemove, items = [] }) => {
           <>
             <div className={style.items}>
               {items.map((item) => (
-                <div key={item.id}
+                <div
+                  key={item.id}
                   className={cn(
                     style.cartItem,
                     "d-flex",
@@ -60,37 +69,25 @@ export const Drawer = ({ onClose, onRemove, items = [] }) => {
                   <b>1074 руб. </b>
                 </li>
               </ul>
-              <button className={style.greenButton}>
+              <button onClick={onClickOrder} className={style.greenButton}>
                 Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
           </>
         ) : (
-          <div
-            className={cn(
-              style.CartEmpty,
-              "d-flex align-center justify-center flex-column flex pl-50 pr-50"
-            )}
-          >
-            <img
-              className="mb-20"
-              width="120px"
-              height="120px"
-              src="./img/empty-cart.png"
-              alt="EmptyCart"
-            />
-            <h2 className="mb-10">Корзина пустая</h2>
-            <p className="opacity-6">
-              Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.
-            </p>
-            <button
-              className={cn(style.greenButton, "mt-20")}
-              onClick={onClose}
-            >
-              <img src="./img/arrow.svg" alt="Arrow" />
-              Вернуться назад
-            </button>
-          </div>
+          <Info
+            title={isOrderCompete ? "Заказ оформлен!" : "Корзина пустая"}
+            description={
+              isOrderCompete
+                ? "Ваш заказ #18 скоро будет передан курьерской доставке"
+                : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+            }
+            image={
+              isOrderCompete
+                ? "./img/complete-order.png"
+                : "./img/empty-cart.png"
+            }
+          />
         )}
       </div>
     </div>

@@ -1,8 +1,9 @@
+import { useContext } from "react";
 import { Card } from "../Card/Card";
+import AppContext from "../../context";
 
 export const Home = ({
   items,
-  cartItems,
   searchValue,
   setSearchValue,
   onChangeSearchInput,
@@ -10,6 +11,8 @@ export const Home = ({
   onAddToFavorites,
   isLoading,
 }) => {
+
+
   const renderItems = () => {
     const filteredItems = items.filter((item) =>
       item.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -23,7 +26,6 @@ export const Home = ({
         onPlus={(obj) => {
           onAddToCart(obj);
         }}
-        added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
         loading={isLoading}
         {...item}
       />
