@@ -3,14 +3,39 @@ import style from "./Drawer.module.scss";
 import { useContext, useState } from "react";
 import Info from "../Info/Info";
 import AppContext from "../../context";
+import axios from "axios";
+import URL from "../../config.json";
+const url = URL.API_URL;
+const url2 = URL.API_URL_2;
 
 export const Drawer = ({ onClose, onRemove, items = [] }) => {
-  const { setCartItems } = useContext(AppContext);
+  const { cartItems, setCartItems } = useContext(AppContext);
   const [isOrderCompete, setIsOrderCompete] = useState(false);
+  const [orderId, setOrderId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onClickOrder = () => {
-    setIsOrderCompete(true);
-    setCartItems([]);
+  const delay = () => new Promise((res, rej) => setTimeout(res, 2000));
+
+  const onClickOrder = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.post(`${url2}/orders`, {
+        items: cartItems,
+      });
+
+      setOrderId(data.id);
+      setIsOrderCompete(true);
+      setCartItems([]);
+
+      for (let i = 0; i < cartItems.length; i++) {
+        const item = cartItems[i];
+        await axios.delete(`${url}/cart/` + item.id);
+        await delay();
+      }
+    } catch (error) {
+      alert("Не удалось создать id");
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -69,7 +94,11 @@ export const Drawer = ({ onClose, onRemove, items = [] }) => {
                   <b>1074 руб. </b>
                 </li>
               </ul>
-              <button onClick={onClickOrder} className={style.greenButton}>
+              <button
+                disabled={isLoading}
+                onClick={onClickOrder}
+                className={style.greenButton}
+              >
                 Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
@@ -79,7 +108,7 @@ export const Drawer = ({ onClose, onRemove, items = [] }) => {
             title={isOrderCompete ? "Заказ оформлен!" : "Корзина пустая"}
             description={
               isOrderCompete
-                ? "Ваш заказ #18 скоро будет передан курьерской доставке"
+                ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке`
                 : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
             }
             image={

@@ -144,7 +144,6 @@ function App() {
   }, []); */
 
   const onAddToCart = (el) => {
-    console.log(el);
     try {
       if (cartItems.find((obj) => Number(obj.id) === Number(el.id))) {
         axios.delete(`${url}/cart/${el.id}`);
