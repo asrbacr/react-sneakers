@@ -2,17 +2,17 @@ import cn from "classname";
 import style from "./Drawer.module.scss";
 import { useContext, useState } from "react";
 import Info from "../Info/Info";
-import AppContext from "../../context";
 import axios from "axios";
 import URL from "../../config.json";
+import { useCart } from "../../hooks/useCart";
 const url = URL.API_URL;
 const url2 = URL.API_URL_2;
 
 export const Drawer = ({ onClose, onRemove, items = [] }) => {
-  const { cartItems, setCartItems } = useContext(AppContext);
   const [isOrderCompete, setIsOrderCompete] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { cartItems, setCartItems, totalPrice } = useCart();
 
   const delay = () => new Promise((res, rej) => setTimeout(res, 2000));
 
@@ -70,7 +70,7 @@ export const Drawer = ({ onClose, onRemove, items = [] }) => {
 
                   <div className="mr-20 flex">
                     <p className="mb-5">{item.title}</p>
-                    <b>{item.price} руб.</b>
+                    <b>{item.price.toFixed(2)} руб.</b>
                   </div>
                   <img
                     className={style.removeBtn}
@@ -86,12 +86,12 @@ export const Drawer = ({ onClose, onRemove, items = [] }) => {
                 <li>
                   <span>Итого:</span>
                   <div></div>
-                  <b>21 498 руб.</b>
+                  <b>{totalPrice.toFixed(2)} руб.</b>
                 </li>
                 <li>
                   <span>Налог 5%:</span>
                   <div></div>
-                  <b>1074 руб. </b>
+                  <b>{((totalPrice / 100) * 5).toFixed(2)} руб. </b>
                 </li>
               </ul>
               <button

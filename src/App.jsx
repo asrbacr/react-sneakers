@@ -9,6 +9,8 @@ import URL from "./config.json";
 import { Home } from "./components/pages/Home";
 import { Favorites } from "./components/pages/Favorites";
 import AppContext from "./context";
+import { useCart } from "./hooks/useCart";
+import { Orders } from "./components/pages/Orders";
 
 const url = URL.API_URL;
 const url2 = URL.API_URL_2;
@@ -99,6 +101,7 @@ function App() {
   const [cartOpened, setCartOpened] = useState(false);
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  // const { cartItems, setCartItems } = useCart([]);
   const [favorites, setFavorites] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -216,6 +219,7 @@ function App() {
         favorites,
         isItemAdded,
         onAddToFavorites,
+        onAddToCart,
         setCartOpened,
         setCartItems,
       }}
@@ -247,10 +251,8 @@ function App() {
             }
             exact
           ></Route>
-          <Route
-            path="/favorites"
-            element={<Favorites onAddToCart={onAddToCart} />}
-          ></Route>
+          <Route path="/favorites" element={<Favorites />}></Route>
+          <Route path="/orders" element={<Orders />}></Route>
         </Routes>
       </div>
     </AppContext.Provider>

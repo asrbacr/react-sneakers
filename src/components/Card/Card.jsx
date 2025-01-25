@@ -63,7 +63,7 @@ export const Card = ({
           <div className="d-flex justify-between align-center">
             <div className="d-flex flex-column">
               <p>Цена:</p>
-              <b>{price} руб</b>
+              <b>{price.toFixed(2)} руб</b>
             </div>
             <img
               className={styles.plus}
