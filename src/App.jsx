@@ -95,8 +95,6 @@ const data = [
   },
 ];
 
-console.log(AppContext);
-
 function App() {
   const [cartOpened, setCartOpened] = useState(false);
   const [items, setItems] = useState([]);
@@ -113,25 +111,45 @@ function App() {
     // });
 
     async function fetchData() {
-      // если ф-ция выполняется больше 1-ого раза, то лучше выставлять состояние загрузки.
-      // setIsLoading(true);
-      const cartResponse = await axios.get(`${url}/cart`);
-      const favoritesResponse = await axios.get(`${url2}/favorites`);
-      const itemsResponse = await axios.get(`${url}/sneakers`);
+      try {
+        // если ф-ция выполняется больше 1-ого раза, то лучше выставлять состояние загрузки.
+        // setIsLoading(true);
 
-      setIsLoading(false);
+        // Promise.all() - если будет ошибка в одном запросе, то вернётся error
+        /* const [cartResponse, favoritesResponse, itemsResponse] =
+          await Promise.all([
+            axios.get(`${url}/cart`),
+            axios.get(`${url2}/favorites`),
+            axios.get(`${url}/sneakers`),
+          ]); */
 
-      setCartItems(cartResponse.data);
-      setFavorites(favoritesResponse.data);
-      setItems(itemsResponse.data);
+        // вариант без Promise.all()
+        const cartResponse = await axios.get(`${url}/cart`);
+        const favoritesResponse = await axios.get(`${url2}/favorites`);
+        const itemsResponse = await axios.get(`${url}/sneakers`);
+
+        setIsLoading(false);
+
+        setCartItems(cartResponse.data);
+        setFavorites(favoritesResponse.data);
+        setItems(itemsResponse.data);
+      } catch (error) {
+        alert("Ошибка получения данных");
+        console.error(error);
+      }
     }
 
     fetchData();
   }, []);
 
   const onRemoveItem = (id) => {
-    setCartItems((prev) => prev.filter((el) => el.id !== id));
-    axios.delete(`${url}/cart/${id}`);
+    try {
+      setCartItems((prev) => prev.filter((el) => Number(el.id) !== Number(id)));
+      axios.delete(`${url}/cart/${id}`);
+    } catch (error) {
+      alert("Ошибка при удалении из корзины");
+      console.error(error);
+    }
   };
 
   /* // через асинхронную функцию
@@ -146,16 +164,30 @@ function App() {
     fetchData();
   }, []); */
 
-  const onAddToCart = (el) => {
+  const onAddToCart = async (el) => {
     try {
-      if (cartItems.find((obj) => Number(obj.id) === Number(el.id))) {
-        axios.delete(`${url}/cart/${el.id}`);
+      const findItem = cartItems.find(
+        (obj) => Number(obj.parentId) === Number(el.id)
+      );
+      if (findItem) {
         setCartItems((prev) =>
-          prev.filter((item) => Number(item.id) !== Number(el.id))
+          prev.filter((item) => Number(item.parentId) !== Number(el.id))
         );
+        await axios.delete(`${url}/cart/${findItem.id}`);
       } else {
-        axios.post(`${url}/cart`, el);
         setCartItems((prev) => [...prev, el]);
+        const { data } = await axios.post(`${url}/cart`, el);
+        setCartItems((prev) =>
+          prev.map((item) => {
+            if (item.parentId === data.parentId) {
+              return {
+                ...item,
+                id: data.id,
+              };
+            }
+            return item;
+          })
+        );
       }
     } catch (error) {
       alert("Не удалось добавить в корзину");
@@ -208,7 +240,7 @@ function App() {
   };
 
   const isItemAdded = (id) => {
-    return cartItems.some((obj) => Number(obj.id) === Number(id));
+    return cartItems.some((obj) => Number(obj.parentId) === Number(id));
   };
 
   return (
@@ -225,13 +257,13 @@ function App() {
       }}
     >
       <div className="wrapper clear">
-        {cartOpened && (
-          <Drawer
-            items={cartItems}
-            onClose={() => setCartOpened(false)}
-            onRemove={onRemoveItem}
-          />
-        )}
+        <Drawer
+          items={cartItems}
+          onClose={() => setCartOpened(false)}
+          onRemove={onRemoveItem}
+          opened={cartOpened}
+        />
+
         <Header onClickCart={() => setCartOpened(true)} />
         <Routes>
           {/* Свойство exact обозначает строгое значение ссылки */}

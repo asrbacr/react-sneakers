@@ -8,7 +8,7 @@ import { useCart } from "../../hooks/useCart";
 const url = URL.API_URL;
 const url2 = URL.API_URL_2;
 
-export const Drawer = ({ onClose, onRemove, items = [] }) => {
+export const Drawer = ({ onClose, onRemove, items = [], opened }) => {
   const [isOrderCompete, setIsOrderCompete] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ export const Drawer = ({ onClose, onRemove, items = [] }) => {
   };
 
   return (
-    <div className={style.overlay}>
+    <div className={`${style.overlay} ${opened ? style.overlayVisible : ""}`}>
       <div className={style.drawer}>
         <h2 className="d-flex justify-between mb-30 ">
           Корзина

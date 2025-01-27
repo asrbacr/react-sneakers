@@ -1,21 +1,30 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Card } from "../Card/Card";
 import axios from "axios";
 import URL from "../../config.json";
+import AppContext from "../../context";
 
 const url2 = URL.API_URL_2;
 
 export const Orders = () => {
+  const { onAddToFavorites, onAddToCart } = useContext(AppContext);
   const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(`${url2}/orders`);
+      try {
+        const { data } = await axios.get(`${url2}/orders`);
+        setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
+        setIsLoading(false);
+      } catch (error) {
+        alert("Ошибка при запросе заказов!");
+        console.log(error);
+      }
 
       // оба варианта делают одно и тоже
       // console.log(data.map((obj) => obj.items).flat());
       // console.log(data.reduce((prev, obj) => [...prev, ...obj.items], []));
-      setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
     })();
   }, []);
 
@@ -26,20 +35,10 @@ export const Orders = () => {
       </div>
 
       <div className="d-flex flex-wrap">
-        {orders.map((item, index) => (
-          <>
-            <Card
-              key={index}
-              onFavorite={(obj) => {
-                onAddToFavorites(obj);
-              }}
-              onPlus={(obj) => {
-                onAddToCart(obj);
-              }}
-              // loading={isLoading}
-              {...item}
-            />
-          </>
+        {(isLoading ? [...Array(8)] : orders).map((item, index) => (
+          <div key={index}>
+            <Card key={index} loading={isLoading} {...item} />
+          </div>
         ))}
       </div>
     </div>
