@@ -3,10 +3,11 @@ import style from "./Drawer.module.scss";
 import { useContext, useState } from "react";
 import Info from "../Info/Info";
 import axios from "axios";
-import URL from "../../config.json";
+// import URL from "../../config.json";
 import { useCart } from "../../hooks/useCart";
-const url = URL.API_URL;
-const url2 = URL.API_URL_2;
+// const url = URL.API_URL;
+// const url2 = URL.API_URL_2;
+const url = "http://localhost:3001";
 
 export const Drawer = ({ onClose, onRemove, items = [], opened }) => {
   const [isOrderCompete, setIsOrderCompete] = useState(false);
@@ -19,7 +20,7 @@ export const Drawer = ({ onClose, onRemove, items = [], opened }) => {
   const onClickOrder = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.post(`${url2}/orders`, {
+      const { data } = await axios.post(`${url}/orders`, {
         items: cartItems,
       });
 

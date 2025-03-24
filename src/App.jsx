@@ -5,15 +5,16 @@ import { Header } from "./components/Header/Header";
 import { Drawer } from "./components/Drawer/Drawer";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import URL from "./config.json";
+// import URL from "./config.json";
 import { Home } from "./components/pages/Home";
 import { Favorites } from "./components/pages/Favorites";
 import AppContext from "./context";
 import { useCart } from "./hooks/useCart";
 import { Orders } from "./components/pages/Orders";
 
-const url = URL.API_URL;
-const url2 = URL.API_URL_2;
+// const url = URL.API_URL;
+// const url2 = URL.API_URL_2;
+const url = "http://localhost:3001";
 
 // data не работает
 const data = [
@@ -125,7 +126,7 @@ function App() {
 
         // вариант без Promise.all()
         const cartResponse = await axios.get(`${url}/cart`);
-        const favoritesResponse = await axios.get(`${url2}/favorites`);
+        const favoritesResponse = await axios.get(`${url}/favorites`);
         const itemsResponse = await axios.get(`${url}/sneakers`);
 
         setIsLoading(false);
@@ -206,12 +207,12 @@ function App() {
   const onAddToFavorites = async (el) => {
     try {
       if (favorites.find((obj) => Number(obj.id) === Number(el.id))) {
-        axios.delete(`${url2}/favorites/${el.id}`);
+        axios.delete(`${url}/favorites/${el.id}`);
         setFavorites((prev) =>
           prev.filter((obj) => Number(obj.id) !== Number(el.id))
         );
       } else {
-        const { data } = await axios.post(`${url2}/favorites`, el);
+        const { data } = await axios.post(`${url}/favorites`, el);
         setFavorites((prev) => [...prev, data]);
       }
     } catch (error) {

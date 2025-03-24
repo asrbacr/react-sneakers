@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Card } from "../Card/Card";
 import axios from "axios";
-import URL from "../../config.json";
+// import URL from "../../config.json";
 import AppContext from "../../context";
 
-const url2 = URL.API_URL_2;
+// const url2 = URL.API_URL_2;
+const url = "http://localhost:3001";
 
 export const Orders = () => {
   const { onAddToFavorites, onAddToCart } = useContext(AppContext);
@@ -14,7 +15,7 @@ export const Orders = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`${url2}/orders`);
+        const { data } = await axios.get(`${url}/orders`);
         setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
         setIsLoading(false);
       } catch (error) {
