@@ -13,7 +13,6 @@ export const Favorites = () => {
 
       <div className="d-flex flex-wrap">
         {favorites.map((item, index) => (
-          <>
             <Card
               key={index}
               favorited={true}
@@ -25,7 +24,6 @@ export const Favorites = () => {
               }}
               {...item}
             />
-          </>
         ))}
       </div>
     </div>
