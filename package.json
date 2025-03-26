@@ -9,7 +9,7 @@
     "dev": "vite --open",
     "server": "json-server -w server/db.json -p 3001",
     "build": "concurrently \"vite build\" \"npm run server\"",
-    "predeploy": "concurrently \"npm run build\" \"npm run server\"",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview"
