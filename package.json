@@ -3,11 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://asrbacr.github.io/react-sneakers/",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run dev\"",
     "dev": "vite --open",
     "server": "json-server -w server/db.json -p 3001",
     "build": "concurrently \"npm vite build \" \"npm run server\"",
+    "predeploy": "concurrently \"npm vite build \" \"npm run server\"",
+    "deploy": "gh-pages -d build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -15,6 +18,7 @@
     "axios": "^1.7.9",
     "classname": "^0.0.0",
     "concurrently": "^9.1.2",
+    "gh-pages": "^6.3.0",
     "json-server": "^1.0.0-beta.3",
     "macro-css": "^1.0.5",
     "react": "^18.3.1",
