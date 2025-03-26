@@ -8,9 +8,9 @@
     "start": "concurrently \"npm run server\" \"npm run dev\"",
     "dev": "vite --open",
     "server": "json-server -w server/db.json -p 3001",
-    "build": "concurrently \"npm vite build \" \"npm run server\"",
-    "predeploy": "concurrently \"npm vite build \" \"npm run server\"",
-    "deploy": "gh-pages -d build",
+    "build": "concurrently \"vite build \" \"npm run server\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview"
   },
