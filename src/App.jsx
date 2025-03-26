@@ -14,7 +14,7 @@ import { Orders } from "./components/pages/Orders";
 
 // const url = URL.API_URL;
 // const url2 = URL.API_URL_2;
-const url = "http://localhost:3001";
+const url = "http://localhost:3001/react-sneakers";
 
 // data не работает
 const data = [
