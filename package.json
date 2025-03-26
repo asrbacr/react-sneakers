@@ -7,7 +7,7 @@
     "start": "concurrently \"npm run server\" \"npm run dev\"",
     "dev": "vite --open",
     "server": "json-server -w server/db.json -p 3001",
-    "build": "vite build",
+    "build": "concurrently \"npm vite build \" \"npm run server\"",
     "lint": "eslint .",
     "preview": "vite preview"
   },
