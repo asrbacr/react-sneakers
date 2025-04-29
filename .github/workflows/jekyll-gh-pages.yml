@@ -38,15 +38,11 @@ jobs:
     #   url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     container:
-      image: node:20
+      image: node:latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          node-version: 20
       - run: npm install
       - run: npm run build_command
-      - run: npm run predeploy
-      - run: npm run deploy
       - run: npm run preview
 
 
