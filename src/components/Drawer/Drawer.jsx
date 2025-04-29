@@ -3,17 +3,21 @@ import style from "./Drawer.module.scss";
 import { useContext, useState } from "react";
 import Info from "../Info/Info";
 import axios from "axios";
-// import URL from "../../config.json";
 import { useCart } from "../../hooks/useCart";
+import AppContext from "../../context";
+
+/* настройка под mockAPI*/
+// import URL from "../../config.json";
 // const url = URL.API_URL;
 // const url2 = URL.API_URL_2;
-const url = "http://localhost:3001";
 
 export const Drawer = ({ onClose, onRemove, items = [], opened }) => {
   const [isOrderCompete, setIsOrderCompete] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { cartItems, setCartItems, totalPrice } = useCart();
+
+  const { url } = useContext(AppContext);
 
   const delay = () => new Promise((res, rej) => setTimeout(res, 2000));
 
@@ -47,7 +51,7 @@ export const Drawer = ({ onClose, onRemove, items = [], opened }) => {
           <img
             onClick={onClose}
             className="cu-p"
-            src="/img/btn-remove.svg"
+            src={`${url}/img/btn-remove.svg`}
             alt="Close"
           />
         </h2>
@@ -65,7 +69,7 @@ export const Drawer = ({ onClose, onRemove, items = [], opened }) => {
                   )}
                 >
                   <div
-                    style={{ backgroundImage: `url(${item.imageUrl})` }}
+                    style={{ backgroundImage: `url(${url}${item.imageUrl})` }}
                     className={style.cartItemImg}
                   ></div>
 
@@ -75,7 +79,7 @@ export const Drawer = ({ onClose, onRemove, items = [], opened }) => {
                   </div>
                   <img
                     className={style.removeBtn}
-                    src="/img/btn-remove.svg"
+                    src={`${url}/img/btn-remove.svg`}
                     alt="Remove"
                     onClick={() => onRemove(item.id)}
                   />
@@ -100,7 +104,7 @@ export const Drawer = ({ onClose, onRemove, items = [], opened }) => {
                 onClick={onClickOrder}
                 className={style.greenButton}
               >
-                Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
+                Оформить заказ <img src={`${url}/img/arrow.svg`} alt="Arrow" />
               </button>
             </div>
           </>
@@ -114,8 +118,8 @@ export const Drawer = ({ onClose, onRemove, items = [], opened }) => {
             }
             image={
               isOrderCompete
-                ? "./img/complete-order.png"
-                : "./img/empty-cart.png"
+                ? `${url}/img/complete-order.png`
+                : `${url}/img/empty-cart.png`
             }
           />
         )}

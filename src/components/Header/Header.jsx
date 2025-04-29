@@ -3,9 +3,11 @@ import style from "./Header.module.scss";
 import { Link } from "react-router";
 import { useContext } from "react";
 import { useCart } from "../../hooks/useCart";
+import AppContext from "../../context";
 
 export const Header = (props) => {
   const { totalPrice } = useCart();
+  const { url } = useContext(AppContext);
 
   return (
     <header className="d-flex justify-between p-40">
@@ -15,7 +17,7 @@ export const Header = (props) => {
             className="mr-15"
             width={40}
             height={40}
-            src="./img/logo.png"
+            src={`${url}/img/logo.png`}
             alt="logo"
           />
           <div>

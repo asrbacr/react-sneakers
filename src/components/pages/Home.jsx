@@ -11,7 +11,7 @@ export const Home = ({
   onAddToFavorites,
   isLoading,
 }) => {
-
+  const { url } = useContext(AppContext);
 
   const renderItems = () => {
     const filteredItems = items.filter((item) =>
@@ -39,7 +39,7 @@ export const Home = ({
           {searchValue ? `Поиска по запросу: ${searchValue}` : "Все кроссовки"}
         </h1>
         <div className="search-block d-flex">
-          <img src="/img/search.svg" alt="search" />
+          <img src={`${url}/img/search.svg`} alt="search" />
           {searchValue && (
             <img
               className="clear cu-p"

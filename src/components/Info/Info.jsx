@@ -7,7 +7,7 @@ import React, { useContext } from "react";
 import AppContext from "../../context";
 
 const Info = ({ title, image, description }) => {
-  const { setCartOpened } = useContext(AppContext);
+  const { setCartOpened, url } = useContext(AppContext);
 
   return (
     <div
@@ -29,7 +29,7 @@ const Info = ({ title, image, description }) => {
         className={cn(style.greenButton, "mt-20")}
         onClick={() => setCartOpened(false)}
       >
-        <img src="./img/arrow.svg" alt="Arrow" />
+        <img src={`${url}/img/arrow.svg`} alt="Arrow" />
         Вернуться назад
       </button>
     </div>

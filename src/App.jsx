@@ -14,7 +14,7 @@ import { Orders } from "./components/pages/Orders";
 
 // const url = URL.API_URL;
 // const url2 = URL.API_URL_2;
-const url = "http://localhost:3001/react-sneakers";
+const url = "http://localhost:3001";
 
 // data не работает
 const data = [
@@ -255,6 +255,7 @@ function App() {
         onAddToCart,
         setCartOpened,
         setCartItems,
+        url
       }}
     >
       <div className="wrapper clear">
