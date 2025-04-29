@@ -42,8 +42,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm install
-      - run: npm run build_command
-      - run: npm run preview
+      - run: npm run build
+      # - run: npm run preview
 
 
 
